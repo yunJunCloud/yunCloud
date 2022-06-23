@@ -58,3 +58,8 @@ spring:
     dropFirst: false # 执行前首先删除数据库，默认 false。若设置为 true，则执行变更前，会先删除目标数据库，请谨慎
     rollback-file: ./log/ #执行更新时将回滚 SQL 写入的文件路径
 
+# 配置日志输出 使用默认控制台打印
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+

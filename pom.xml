@@ -8,18 +8,21 @@
         <version>2.6.6</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.fusiontech</groupId>
-    <artifactId>gitRunner</artifactId>
+    <groupId>com.cloud</groupId>
+    <artifactId>yun</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>gitRunner</name>
+    <name>cloudYun</name>
     <description>Demo project for Spring Boot</description>
     <properties>
         <java.version>11</java.version>
         <spring.security.version>2.7.0</spring.security.version>
         <mysql.version>8.0.27</mysql.version>
         <durid.version>1.2.11</durid.version>
-        <pagehelper.version>1.2.13</pagehelper.version>
+        <pagehelper.version>1.4.1</pagehelper.version>
         <liquibase.verison>4.7.1</liquibase.verison>
+        <mybaties.version>2.2.2</mybaties.version>
+        <mybatie.plus.version>3.5.1</mybatie.plus.version>
+        <fastjson.version>1.2.75</fastjson.version>
     </properties>
     <dependencies>
         <dependency>
@@ -28,14 +31,15 @@
         </dependency>
 
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
         </dependency>
 
         <!--数据库重构工具-->
@@ -50,6 +54,20 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
             <version>${spring.security.version}</version>
+        </dependency>
+
+        <!--引入 mybatis-spring-boot-starter 的依赖-->
+<!--        <dependency>-->
+<!--            <groupId>org.mybatis.spring.boot</groupId>-->
+<!--            <artifactId>mybatis-spring-boot-starter</artifactId>-->
+<!--            <version>${mybaties.version}</version>-->
+<!--        </dependency>-->
+
+        <!--mybatis-plus启动器-->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <version>${mybatie.plus.version}</version>
         </dependency>
 
         <!--mysql的驱动连接-->
@@ -72,12 +90,11 @@
             <artifactId>pagehelper-spring-boot-starter</artifactId>
             <version>${pagehelper.version}</version>
         </dependency>
-        
 
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fastjson.version}</version>
         </dependency>
 
     </dependencies>
