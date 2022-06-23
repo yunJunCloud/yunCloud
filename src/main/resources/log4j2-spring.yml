@@ -1,0 +1,40 @@
+Configuration:
+  status: warn #log4j2本身的日志级别
+    
+  Appenders:
+    Console:  #输出到控制台  
+      name: Console #Appender命名  
+      target: SYSTEM_OUT  
+      PatternLayout:  
+        pattern: "%d{yyyy-MM-dd HH:mm:ss,SSS}:%4p (%F:%L) - %m%n"  
+    RollingFile: # 输出到文件，超过256MB归档  
+        name: RollingFile  
+        ignoreExceptions: false  
+        fileName: ../logs/spring.log
+        filePattern: "logs/$${date:yyyy-MM}/ei-service -%d{yyyy-MM-dd}-%i.log.gz"
+        PatternLayout:  
+          pattern: "%d{yyyy-MM-dd HH:mm:ss,SSS}:%4p (%F:%L) - %m%n"  
+        Policies:  
+          SizeBasedTriggeringPolicy:  
+            size: "256 MB"  
+        DefaultRolloverStrategy:  
+          max: 1000  
+  Loggers:  
+    Root:  
+      level: info  #程序的日志级别
+      AppenderRef:  
+        - ref: Console  
+        - ref: RollingFile  
+    Logger: #单独设置某些包的输出级别  
+      - name: druid.sql.Statement
+        additivity: false #去除重复的log  
+        level: debug  
+        AppenderRef:  
+          - ref: Console #复数加上-  
+          - ref: RollingFile #复数加上- 
+      - name: druid.sql.ResultSet
+        additivity: false #去除重复的log  
+        level: debug  
+        AppenderRef:  
+          - ref: Console #复数加上-  
+          - ref: RollingFile #复数加上- 

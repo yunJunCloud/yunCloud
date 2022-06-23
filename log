@@ -1,0 +1,20 @@
+--  *********************************************************************
+--  SQL to roll back currently unexecuted changes
+--  *********************************************************************
+--  Change Log: classpath:liquibase/changeLog.sql
+--  Ran at: 6/22/22, 6:36 PM
+--  Against: root@192.168.136.1@jdbc:mysql://192.168.136.128:3306/yun?characterEncoding=utf8&useSSL=false&serverTimezone=UTC&rewriteBatchedStatements=true
+--  Liquibase version: 4.7.1
+--  *********************************************************************
+
+--  Lock Database
+UPDATE yun.DATABASECHANGELOGLOCK SET `LOCKED` = 1, LOCKEDBY = 'DESKTOP-0LVPOH6 (192.168.136.1)', LOCKGRANTED = NOW() WHERE ID = 1 AND `LOCKED` = 0;
+
+--  Rolling Back ChangeSet: classpath:liquibase/changeLog.sql::20220622::myk
+select * from `user`;
+
+DELETE FROM yun.DATABASECHANGELOG WHERE ID = '20220622' AND AUTHOR = 'myk' AND FILENAME = 'classpath:liquibase/changeLog.sql';
+
+--  Release Database Lock
+UPDATE yun.DATABASECHANGELOGLOCK SET `LOCKED` = 0, LOCKEDBY = NULL, LOCKGRANTED = NULL WHERE ID = 1;
+

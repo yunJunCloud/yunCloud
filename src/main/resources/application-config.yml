@@ -1,0 +1,60 @@
+spring:
+  datasource:
+    druid:
+      type: com.alibaba.druid.pool.DruidDataSource
+      url: jdbc:mysql://192.168.136.128:3306/yun?characterEncoding=utf8&useSSL=false&serverTimezone=UTC&rewriteBatchedStatements=true
+      username: root
+      password: 123456
+      #连接池配置
+      initial-size: 5 #初始连接数
+      min-idle: 10 #最少连接数
+      max-active: 2000 #最大连接数
+      max-wait: 6000 #最大等待超时时间
+      pool-prepared-statements: true #打开PSCache，并且指定每个连接上PSCache的大小
+      max-pool-prepared-statement-per-connection-size: 20
+      validation-query: SELECT 1 FROM DUAL
+      validation-query-timeout: 6000
+      test-on-borrow: false
+      test-on-return: false
+      test-while-idle: true
+      time-between-eviction-runs-millis: 2000
+      min-evictable-idle-time-millis: 600000
+      max-evictable-idle-time-millis: 900000
+      keepAlive: true
+      phyMaxUseCount: 1000
+      useGlobalDataSourceStat: true
+      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=3000;
+      filters: stat,wall
+      #监控配置
+      #WebStatFilter配置，说明请参考Druid Wiki，配置_配置WebStatFilter
+      web-stat-filter:
+        enabled: true #默认为false，表示不使用WebStatFilter配置，就是属性名去短线
+        url-pattern: /* #拦截该项目下的一切请求
+        exclusions: /druid/*,*.js,*.gif,*.jpg,*.bmp,*.png,*.css,*.ico  #对这些请求放行
+        session-stat-enable: true
+        session-stat-max-count: 10
+        principal-session-name: session_name
+        principal-cookie-name: cookie_name
+      #profile-enable:
+      # StatViewServlet配置，说明请参考Druid Wiki，配置_StatViewServlet配置
+      stat-view-servlet: # StatViewServlet配置
+        enabled: true #默认为false，表示不使用StatViewServlet配置，就是属性名去短线
+        url-pattern: /druid/*  #配置DruidStatViewServlet的访问地址。后台监控页面的访问地址
+        reset-enable: false #禁用HTML页面上的“重置”功能，会把所有监控的数据全部清空，一般不使用
+        login-username: admin #监控页面登录的用户名
+        login-password: admin@123 #监控页面登录的密码
+        allow: ""  #IP白名单(没有配置或者为空，则允许所有访问)。允许谁访问druid后台，默认允许全部用户访问。
+        #deny:  #IP黑名单 (存在共同时，deny优先于allow)。不允许谁进行访问druid后台，
+        #Spring监控配置，说明请参考Druid Github Wiki，配置_Druid和Spring关联监控配置
+    schema: classpath:database/init.sql
+    #data: classpath:database/update.sql  #更新脚本时使用
+    initialization-mode: always # always为始终执行初始化，embedded只初始化内存数据库（默认值）,如h2等，never为不执行初始化
+    separator: ; # 为sql脚本中语句分隔符
+  liquibase:
+    enabled: true
+    change-log: classpath:liquibase/changeLog.sql #存储变化的文件
+    #check-change-log-location: true #检查存储变化的文件是否存在
+    contexts: dev  # 分环境执行，若在 changelog 文件中设置了对应 context 属性，则只会执行与 dev 对应值的 changeset
+    dropFirst: false # 执行前首先删除数据库，默认 false。若设置为 true，则执行变更前，会先删除目标数据库，请谨慎
+    rollback-file: ./log/ #执行更新时将回滚 SQL 写入的文件路径
+

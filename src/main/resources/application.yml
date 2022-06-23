@@ -1,0 +1,10 @@
+server:
+  port: 9088
+
+spring:
+  profiles:
+    active:
+      - config  #基础配置
+      - dev     #环境配置
+#logging:
+#  config: classpath:log4j2-spring.yml
