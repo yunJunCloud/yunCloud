@@ -12,7 +12,7 @@ import java.util.Date;
  * 已经在basebean中使用了----@TableField---- 完成了自动填充，就不用在使用MyMetaObjectHandler实现自动填充了
  */
 @Slf4j
-//@Component
+@Component
 public class MyMetaObjectHandler implements MetaObjectHandler {
 	/**
 	 * 插入时候自动填充
@@ -24,6 +24,7 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
 		this.setFieldValByName(FieldConstants.CREATE_TIME,new Date(),metaObject);
 		this.setFieldValByName(FieldConstants.UPDATE_TIME,new Date(),metaObject);
 		this.setFieldValByName(FieldConstants.ISDELETE,0,metaObject);
+		this.setFieldValByName(FieldConstants.VERSION,1,metaObject);
 		//this.setFieldValByName(FieldConstants.CREATOR,1,metaObject); //创建人修改人应该session中获取
 	}
 
