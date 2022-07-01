@@ -1,9 +1,8 @@
 package com.cloud.yun.enums;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.util.EnumUtil;
-import org.springframework.http.HttpStatus;
 
+import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,7 +14,7 @@ import java.util.stream.Collectors;
  * @Date 6/30/2022 6:34 PM
  * @Version 1.0
  **/
-public enum HttpStatusCode {
+public enum HttpStatusCode implements YunCloudCode {
 	/**
 	 * http状态码枚举所有状态码注解
 	 */
@@ -117,6 +116,15 @@ public enum HttpStatusCode {
 		return "";
 	}
 
+	@Override
+	public int getHttpErrorCode() {
+		return this.value;
+	}
+
+	@Override
+	public String getMessage(Object... args) {
+		return new MessageFormat(this.zhMessage).format(args);
+	}
 }
 
 

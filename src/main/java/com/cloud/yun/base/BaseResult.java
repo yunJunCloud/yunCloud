@@ -1,6 +1,7 @@
 package com.cloud.yun.base;
 
 import com.cloud.yun.enums.HttpStatusCode;
+import com.cloud.yun.exception.YunCloudException;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -24,6 +25,13 @@ public class BaseResult <T> implements Serializable {
 
 	public BaseResult(){};
 
+	public BaseResult OK(T data){
+		this.setCode(HttpStatusCode.OK.Value());
+		this.setData(data);
+		this.setMessage(HttpStatusCode.OK.ZhMessage());
+		return this;
+	}
+
 	public void error() {
 		try {
 			StackTraceElement ste = (new Throwable()).getStackTrace()[1];
@@ -34,18 +42,31 @@ public class BaseResult <T> implements Serializable {
 		}
 	}
 
-	public void error(String message) {
+	public BaseResult error(String message) {
 		try {
 			error();
 			this.message = message;
 		} catch (Exception var3) {
 		}
+		return this;
 	}
 
-	public BaseResult OK(T data){
-		this.setCode(HttpStatusCode.OK.Value());
-		this.setData(data);
-		this.setMessage(HttpStatusCode.OK.ZhMessage());
+	public void error(int code, String message) {
+		try {
+			error();
+			this.code = code;
+			this.message = message;
+		} catch (Exception var3) {
+		}
+	}
+
+	public BaseResult error(YunCloudException e) {
+		try {
+			error();
+			this.code = e.getHttpStatusCode();
+			this.message = e.getMessage();
+		} catch (Exception var3) {
+		}
 		return this;
 	}
 
