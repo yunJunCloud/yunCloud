@@ -32,6 +32,13 @@ public class BaseResult <T> implements Serializable {
 		return this;
 	}
 
+	public BaseResult OK(){
+		this.setCode(HttpStatusCode.OK.Value());
+		//this.setData(data);
+		this.setMessage(HttpStatusCode.OK.ZhMessage());
+		return this;
+	}
+
 	public void error() {
 		try {
 			StackTraceElement ste = (new Throwable()).getStackTrace()[1];

@@ -1,6 +1,5 @@
 package com.cloud.yun.exception;
 
-import cn.hutool.http.server.HttpServerRequest;
 import com.cloud.yun.base.BaseResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -20,7 +19,7 @@ public class GlobalExceptionHandler {
 
 	/**
 	 * 处理自定义异常
-	 * @param req
+	 * @param
 	 * @param yunCloudException
 	 * @return
 	 */
@@ -42,7 +41,7 @@ public class GlobalExceptionHandler {
 
 	/***
 	 * 运行行异常的处理
-	 * @param req
+	 * @param
 	 * @param e
 	 * @return
 	 */
@@ -50,6 +49,11 @@ public class GlobalExceptionHandler {
 	@ResponseBody
 	public BaseResult  baseException(Exception e){
 		log.error("Exceptiony----" + e.getMessage());
+		return new BaseResult().error(e.getMessage());
+	}
+
+	public BaseResult JwtException(JwtException e){
+		log.error("JwtException----" +e.getMessage());
 		return new BaseResult().error(e.getMessage());
 	}
 }

@@ -76,7 +76,8 @@ public enum HttpStatusCode implements YunCloudCode {
 	LOOP_DETECTED(508, "Loop Detected", "服务器处理请求时发现死循环"),
 	BANDWIDTH_LIMIT_EXCEEDED(509, "Bandwidth Limit Exceeded", "服务器达到带宽限制"),
 	NOT_EXTENDED(510, "Not Extended", "获取资源所需的策略没有被满足"),
-	NETWORK_AUTHENTICATION_REQUIRED(511, "Network Authentication Required", "需要进行网络授权");;
+	NETWORK_AUTHENTICATION_REQUIRED(511, "Network Authentication Required", "需要进行网络授权")
+	;
 
 	private final int value;
 	private final String enMessage;
