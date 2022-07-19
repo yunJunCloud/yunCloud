@@ -1,0 +1,5 @@
+yuncloud:
+  jwt:
+    publicKey: XXXAAAXXAA
+    privateKey: VDSWDAAFFWW
+    expire: 10

@@ -4,16 +4,13 @@ import cn.hutool.json.JSONUtil;
 import com.cloud.yun.base.BaseResult;
 import com.cloud.yun.exception.JwtException;
 import com.cloud.yun.jwt.JwtConstants;
-import com.cloud.yun.jwt.JwtTokenProvider;
+import com.cloud.yun.jwt.JwtTokenUtil;
 import com.cloud.yun.jwt.TokenType;
-import com.cloud.yun.jwt.handler.BaseHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.stereotype.Component;
@@ -41,13 +38,10 @@ import java.util.Collection;
 @Component
 public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
 	@Autowired
-	private JwtTokenProvider jwtTokenProvider;
-
-	private final AuthenticationManager authenticationManager;
+	private JwtTokenUtil jwtTokenUtil;
 
 	public JwtAuthenticationFilter(AuthenticationManager authenticationManager) {
 		super(authenticationManager);
-		this.authenticationManager = authenticationManager;
 	}
 
 	@Override
@@ -83,15 +77,15 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
 		}
 		if (token != null && !"".equals(token.trim())) {
 			// 从Token中解密获取用户名
-			String userName = jwtTokenProvider.getUserName(token);
-			boolean expired = jwtTokenProvider.isTokenExpired(token);
+			String userName = jwtTokenUtil.getUserName(token);
+			boolean expired = jwtTokenUtil.isTokenExpired(token);
 			if(expired){
 				throw new JwtException("登录以过期");
 			}
 
 			if (userName != null) {
 				// 从Token中解密获取用户角色
-				String role = jwtTokenProvider.getUserRoleFromToken(token);
+				String role = jwtTokenUtil.getUserRoleFromToken(token);
 				// 将ROLE_XXX,ROLE_YYY格式的角色字符串转换为数组
 				String[] roles = role.split(",");
 				Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();

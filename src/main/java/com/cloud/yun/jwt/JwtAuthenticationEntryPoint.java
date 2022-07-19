@@ -1,6 +1,7 @@
 package com.cloud.yun.jwt;
 
 import com.cloud.yun.base.BaseResult;
+import com.cloud.yun.enums.HttpStatusCode;
 import com.cloud.yun.jwt.handler.BaseHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.AuthenticationException;
@@ -14,7 +15,7 @@ import java.io.IOException;
 
 /**
  * @ClassName JwtAuthenticationEntryPoint
- * @Description JwtAuthenticationEntryPoint is to handle xxxx
+ * @Description JwtAuthenticationEntryPoint is to handle xxxx   JWT认证失败处理器
  * @Author jack
  * @Date 7/12/2022 5:12 PM
  * @Version 1.0
@@ -25,7 +26,7 @@ public class JwtAuthenticationEntryPoint extends BaseHandler implements Authenti
 	@Override
 	public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
 		log.info("------未授权----");
-		BaseResult err = new BaseResult<>().error(authException.getMessage());
+		BaseResult err = new BaseResult<>().error(HttpStatusCode.UNAUTHORIZED.Value(),authException.getMessage());
 		this.handleResult(request,response,err);
 	}
 }

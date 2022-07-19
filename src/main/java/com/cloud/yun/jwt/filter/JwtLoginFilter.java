@@ -1,27 +1,13 @@
 package com.cloud.yun.jwt.filter;
 
-import cn.hutool.jwt.JWTUtil;
-import cn.hutool.jwt.signers.JWTSignerUtil;
-import com.cloud.yun.jwt.CustomAuthenticationManager;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.*;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.stereotype.Component;
 
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @ClassName JwtLoginFilter
@@ -31,25 +17,20 @@ import java.util.Map;
  * @Date 7/4/2022 5:58 PM
  * @Version 1.0
  **/
-@Component
+//@Component
 public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
 	private String usernameParameter = "username";
 	private String passwordParameter = "password";
 
-
-	private final AuthenticationManager authenticationManager;
+	//不重写AuthenticationManager 使用ProviderManager
+	//private final AuthenticationManager authenticationManager;
 
 	private static final AntPathRequestMatcher DEFAULT_ANT_PATH_REQUEST_MATCHER = new AntPathRequestMatcher("/login", "POST");
 
-	public JwtLoginFilter(CustomAuthenticationManager customAuthenticationManager) {
-		this.authenticationManager = customAuthenticationManager;
+	public JwtLoginFilter() {
+		//this.authenticationManager = customAuthenticationManager;
 		this.setPostOnly(false);
 		this.setRequiresAuthenticationRequestMatcher(DEFAULT_ANT_PATH_REQUEST_MATCHER);
-	}
-
-	@Override
-	public AuthenticationManager getAuthenticationManager() {
-		return authenticationManager;
 	}
 
 	/***

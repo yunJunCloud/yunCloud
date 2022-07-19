@@ -1,7 +1,7 @@
 package com.cloud.yun.jwt.handler;
 
 import com.cloud.yun.base.BaseResult;
-import com.cloud.yun.jwt.JwtTokenProvider;
+import com.cloud.yun.jwt.JwtTokenUtil;
 import com.cloud.yun.jwt.TokenType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -26,12 +26,12 @@ import java.io.IOException;
 public class JwtLoginSuccessHandler extends BaseHandler implements AuthenticationSuccessHandler {
 
 	@Resource
-	private JwtTokenProvider jwtTokenProvider;
+	private JwtTokenUtil jwtTokenUtil;
 
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
 		//生成jwtToken 并放置到请求头中
-		String token = jwtTokenProvider.createToken(authentication.getName(), authentication.getAuthorities());
+		String token = jwtTokenUtil.createToken(authentication.getName(), authentication.getAuthorities());
 		response.setHeader(TokenType.TOKEN_JWT,token);
 		log.info("-----login success---- jwtToken : " + token);
 		/**

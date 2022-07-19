@@ -13,5 +13,6 @@ public interface URLConstants {
 	public static final String version = "/v1";
 	public static  final String common = baseUrl+"/common";
 	public static final String  common_captcha = "/captcha";
+	public static  final String login = baseUrl+"/login";
 
 }

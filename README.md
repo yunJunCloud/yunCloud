@@ -41,4 +41,6 @@
    2、 从request中获取用户的相关信息（JwtTokenProvider）   
    3、定义manager 鉴权 通过JwtTokenProvider 中生成的JWTToken ，去查询库中是否存在改用户，然后检查密码是否正确，是否登录过期等、
    4、 校验成功之后，走success处理，并将jwtToken写入到session中   
+
+
     

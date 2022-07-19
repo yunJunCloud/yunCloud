@@ -25,7 +25,7 @@ import java.util.*;
  * @Version 1.0
  **/
 @Component
-public class JwtTokenProvider {
+public class JwtTokenUtil {
 	@Autowired
 	private JwtProperties jwtProperties;
 
@@ -107,7 +107,7 @@ public class JwtTokenProvider {
 	}
 
 	public static void main(String[] args) {
-		JwtTokenProvider jwtTokenProvider = new JwtTokenProvider();
+		JwtTokenUtil jwtTokenProvider = new JwtTokenUtil();
 		String zhangsan = jwtTokenProvider.createToken("zhangsan", null);
 		System.out.println(zhangsan);
 		boolean tokenExpired = jwtTokenProvider.isTokenExpired(zhangsan);

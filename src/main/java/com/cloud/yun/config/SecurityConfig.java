@@ -1,5 +1,6 @@
 package com.cloud.yun.config;
 
+import com.cloud.yun.constants.URLConstants;
 import com.cloud.yun.jwt.JwtAuthenticationEntryPoint;
 import com.cloud.yun.jwt.PasswordEncoder;
 import com.cloud.yun.jwt.handler.JwtAccessDeniedHandler;
@@ -10,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -48,8 +50,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			"/login",
 			"/logout",
 			"/captcha",
-			"/favicon.ico"
+			"/favicon.ico",
+			"/user/save"
 	};
+
+	@Bean
+	@Override
+	public AuthenticationManager authenticationManagerBean() throws Exception {
+		return super.authenticationManagerBean();
+	}
 
 	@Bean
 	PasswordEncoder PasswordEncoder() {
@@ -60,14 +69,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		//放行登录接口 user/login   anonymous()只能未登录的状态访问
 		http.authorizeRequests()
-				.antMatchers("/login").anonymous()
+				.antMatchers(URLConstants.login).anonymous()
 				//permitAll() 所有人能访问（登录和未登录）
-				.antMatchers("/index").permitAll()
+				.antMatchers("/index")
+				.permitAll()
 				//除上述外所有请求都要认证
 				.and().authorizeRequests();
 
 		http.cors().and().csrf().disable()
 				.formLogin()
+				.loginPage(URLConstants.login)
 				.successHandler(jwtLoginSuccessHandler)
 				.failureHandler(jwtLoginFailureHandler)
 

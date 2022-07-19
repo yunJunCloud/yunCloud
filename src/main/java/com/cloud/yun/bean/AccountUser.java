@@ -22,9 +22,9 @@ public class AccountUser implements UserDetails, Serializable {
 	private String password;
 	private final String username;
 	private final Collection<? extends GrantedAuthority> authorities;
-	private final boolean accountNonExpired;
-	private final boolean accountNonLocked;
-	private final boolean credentialsNonExpired;
+	private final boolean accountNonExpired;   //用户是否过期
+	private final boolean accountNonLocked;    //用户是否被锁定
+	private final boolean credentialsNonExpired;  //认证信息是否过期
 	private final boolean enabled;
 
 	public AccountUser(Long userId, String username, String password, Collection<? extends GrantedAuthority> authorities) {
@@ -46,36 +46,36 @@ public class AccountUser implements UserDetails, Serializable {
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return null;
+		return this.authorities;
 	}
 
 	@Override
 	public String getPassword() {
-		return null;
+		return this.password;
 	}
 
 	@Override
 	public String getUsername() {
-		return null;
+		return this.username;
 	}
 
 	@Override
 	public boolean isAccountNonExpired() {
-		return false;
+		return this.accountNonExpired;
 	}
 
 	@Override
 	public boolean isAccountNonLocked() {
-		return false;
+		return this.accountNonLocked;
 	}
 
 	@Override
 	public boolean isCredentialsNonExpired() {
-		return false;
+		return this.credentialsNonExpired;
 	}
 
 	@Override
 	public boolean isEnabled() {
-		return false;
+		return this.enabled;
 	}
 }

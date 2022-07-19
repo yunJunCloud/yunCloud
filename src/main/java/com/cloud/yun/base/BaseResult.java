@@ -58,13 +58,14 @@ public class BaseResult <T> implements Serializable {
 		return this;
 	}
 
-	public void error(int code, String message) {
+	public BaseResult error(int code, String message) {
 		try {
 			error();
 			this.code = code;
 			this.message = message;
 		} catch (Exception var3) {
 		}
+		return this;
 	}
 
 	public BaseResult error(YunCloudException e) {

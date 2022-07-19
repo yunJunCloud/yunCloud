@@ -2,7 +2,7 @@ spring:
   datasource:
     druid:
       type: com.alibaba.druid.pool.DruidDataSource
-      url: jdbc:mysql://192.168.136.128:3306/yun?characterEncoding=utf8&useSSL=false&serverTimezone=UTC&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true
+      url: jdbc:mysql://192.168.136.132:3306/yuncloud?characterEncoding=utf8&useSSL=false&serverTimezone=UTC&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true
       username: root
       password: 123456
       #连接池配置
@@ -50,6 +50,13 @@ spring:
     #data: classpath:database/update.sql  #更新脚本时使用
     initialization-mode: always # always为始终执行初始化，embedded只初始化内存数据库（默认值）,如h2等，never为不执行初始化
     separator: ; # 为sql脚本中语句分隔符
+
+  redis:
+    database: 0
+    host: 192.168.136.132
+    port: 6379
+    password:
+
   liquibase:
     enabled: true
     change-log: classpath:liquibase/changeLog.sql #存储变化的文件
@@ -69,4 +76,3 @@ pagehelper:
   reasonable: true
   support-methods-arguments: true
   params: count=countSql
-

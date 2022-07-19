@@ -2,14 +2,14 @@
 --  SQL to roll back currently unexecuted changes
 --  *********************************************************************
 --  Change Log: classpath:liquibase/changeLog.sql
---  Ran at: 7/1/22, 5:36 PM
---  Against: root@192.168.136.1@jdbc:mysql://192.168.136.128:3306/yun?characterEncoding=utf8&useSSL=false&serverTimezone=UTC&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true
+--  Ran at: 7/19/22, 4:17 PM
+--  Against: root@192.168.136.1@jdbc:mysql://192.168.136.132:3306/yuncloud?characterEncoding=utf8&useSSL=false&serverTimezone=UTC&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true
 --  Liquibase version: 4.7.1
 --  *********************************************************************
 
 --  Lock Database
-UPDATE yun.DATABASECHANGELOGLOCK SET `LOCKED` = 1, LOCKEDBY = 'DESKTOP-0LVPOH6 (192.168.136.1)', LOCKGRANTED = NOW() WHERE ID = 1 AND `LOCKED` = 0;
+UPDATE yuncloud.DATABASECHANGELOGLOCK SET `LOCKED` = 1, LOCKEDBY = 'DESKTOP-0LVPOH6 (192.168.136.1)', LOCKGRANTED = NOW() WHERE ID = 1 AND `LOCKED` = 0;
 
 --  Release Database Lock
-UPDATE yun.DATABASECHANGELOGLOCK SET `LOCKED` = 0, LOCKEDBY = NULL, LOCKGRANTED = NULL WHERE ID = 1;
+UPDATE yuncloud.DATABASECHANGELOGLOCK SET `LOCKED` = 0, LOCKEDBY = NULL, LOCKGRANTED = NULL WHERE ID = 1;
 
