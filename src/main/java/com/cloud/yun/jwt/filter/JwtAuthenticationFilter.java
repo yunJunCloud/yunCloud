@@ -2,6 +2,7 @@ package com.cloud.yun.jwt.filter;
 
 import cn.hutool.json.JSONUtil;
 import com.cloud.yun.base.BaseResult;
+import com.cloud.yun.config.SecurityConfig;
 import com.cloud.yun.exception.JwtException;
 import com.cloud.yun.jwt.JwtConstants;
 import com.cloud.yun.jwt.JwtTokenUtil;
@@ -24,7 +25,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * @ClassName JwtAuthenticationFilter
@@ -35,7 +38,7 @@ import java.util.Collection;
  * @Version 1.0
  **/
 @Slf4j
-@Component
+//@Component
 public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
@@ -44,12 +47,19 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
 		super(authenticationManager);
 	}
 
+	private List<String> URL_FILTERLIST = Arrays.asList(SecurityConfig.URL_WHITELIST);
+
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
 		log.info("授权认证的开始==========="+ request.getRequestURI());
-		if(request.getRequestURI().indexOf("index") != -1){
+		//过滤掉不需要校验的接口
+		if(URL_FILTERLIST.contains(request.getRequestURI())){
 			chain.doFilter(request,response);
+			return;
 		}
+//		if(request.getRequestURI().indexOf("index") != -1){
+//			chain.doFilter(request,response);
+//		}
 		UsernamePasswordAuthenticationToken authentication = null;
 		try {
 			authentication = getAuthentication(request);
